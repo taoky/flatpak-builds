@@ -5,6 +5,8 @@ git submodule update --init --recursive
 
 # You could set DOCKER env to use alternative command like podman
 DOCKER=${DOCKER:-docker}
+TODESK_DOMAIN=${TODESK_DOMAIN:-}
+TODESK_DIR=${TODESK_DIR:-}
 
 # Build the image
 $DOCKER build -t taoky/flatpak-builds .
@@ -13,4 +15,5 @@ $DOCKER build -t taoky/flatpak-builds .
 $DOCKER run --rm --cap-add CAP_SYS_ADMIN --cap-add CAP_NET_ADMIN \
   --security-opt seccomp=unconfined --security-opt apparmor=unconfined \
   --device /dev/fuse --network=host \
-  -v $(pwd):/workspace taoky/flatpak-builds /workspace/build.py
+  -v $(pwd):/workspace -e TODESK_DOMAIN=$TODESK_DOMAIN -e TODESK_DIR=$TODESK_DIR \
+  taoky/flatpak-builds /workspace/build.py

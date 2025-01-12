@@ -43,11 +43,10 @@ modules:
           - mv opt/todesk .
           - rm -rf opt usr etc *.tar.* debian-binary *.deb
         dest-filename: apply_extra
-      - type: extra-data
-        filename: todesk-amd64.deb
-        url: https://dl.todesk.com/linux/todesk-v4.7.2.0-amd64.deb
+      - type: file
+        dest-filename: todesk-amd64.deb
+        url: https://😡TODESK_DOMAIN😡/😡TODESK_DIR😡/todesk-v4.7.2.0-amd64.deb
         sha256: bfb5695d715568a23df51a735167c073a784ecd1c625e16b35e5136d5b97fb28
-        size: 63204994
         x-checker-data:
           type: html
           url: https://www.todesk.com/linux.html
