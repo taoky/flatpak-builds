@@ -13,4 +13,6 @@ export LIBVA_DRIVERS_PATH="$APP_HOME/todesk/bin"
 export LD_PRELOAD=/app/lib/libtodesk_fix.so
 
 TODESK_EXEC_PATH="$FAKE_BIN_DIR/ToDesk_Service" "/app/todesk/bin/ToDesk_Service" &
-TODESK_EXEC_PATH="$FAKE_BIN_DIR/ToDesk" exec "/app/todesk/bin/ToDesk"
+SERVICE_PID=$!
+trap 'kill $SERVICE_PID 2>/dev/null || true' EXIT
+TODESK_EXEC_PATH="$FAKE_BIN_DIR/ToDesk" "/app/todesk/bin/ToDesk"
