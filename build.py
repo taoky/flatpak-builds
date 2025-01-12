@@ -1,9 +1,28 @@
 #!/usr/bin/python3
 import subprocess
+from pathlib import Path
+import os
 
 BUILD_LIST = [
     ("com.todesk.ToDesk", "com.todesk.ToDesk.yaml"),
 ]
+
+
+def get_replacement(env, default):
+    res = os.environ.get(env, default)
+    if not res:
+        return default
+    return res
+
+
+REPLACEMENTS = {
+    "😡TODESK_DOMAIN😡": get_replacement(
+        "TODESK_DOMAIN", "dl.todesk.com"
+    ),
+    "😡TODESK_DIR😡": get_replacement(
+        "TODESK_DIR", "linux"
+    )
+}
 
 
 def flatpak_build(appname: str, manifest: str):
@@ -12,7 +31,7 @@ def flatpak_build(appname: str, manifest: str):
             "flatpak-builder",
             "--force-clean",
             "--install-deps-from=flathub",
-            "--repo=repo",
+            "--install",
             "build",
             manifest,
         ],
@@ -23,10 +42,9 @@ def flatpak_build(appname: str, manifest: str):
         [
             "flatpak",
             "build-bundle",
-            "repo",
+            "/var/lib/flatpak/repo/",
             appname + ".flatpak",
             appname,
-            "--runtime-repo=https://flathub.org/repo/flathub.flatpakrepo",
         ],
         check=True,
         cwd=appname,
@@ -34,6 +52,16 @@ def flatpak_build(appname: str, manifest: str):
 
 
 def build_single(appname: str, manifest: str):
+    manifest_path = Path(appname) / manifest
+    manifest_template_path = Path(appname) / (manifest + ".template")
+    if manifest_template_path.exists():
+        # Do template substitution
+        with open(manifest_template_path, "r") as f:
+            data = f.read()
+        for k, v in REPLACEMENTS.items():
+            data = data.replace(k, v)
+        with open(manifest_path, "w") as f:
+            f.write(data)
     flatpak_build(appname, manifest)
 
 

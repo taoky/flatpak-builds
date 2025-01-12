@@ -12,5 +12,5 @@ export LIBVA_DRIVERS_PATH="$APP_HOME/todesk/bin"
 # Load the hack library.
 export LD_PRELOAD=/app/lib/libtodesk_fix.so
 
-TODESK_EXEC_PATH="$FAKE_BIN_DIR/ToDesk_Service" "/app/extra/todesk/bin/ToDesk_Service" &
-TODESK_EXEC_PATH="$FAKE_BIN_DIR/ToDesk" exec "/app/extra/todesk/bin/ToDesk"
+TODESK_EXEC_PATH="$FAKE_BIN_DIR/ToDesk_Service" "/app/todesk/bin/ToDesk_Service" &
+TODESK_EXEC_PATH="$FAKE_BIN_DIR/ToDesk" exec "/app/todesk/bin/ToDesk"

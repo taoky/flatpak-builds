@@ -28,26 +28,21 @@ modules:
       # Build libtodesk_fix.so
       - gcc -shared -fPIC -std=gnu11 todesk_fix.c -o libtodesk_fix.so
       - install -D -m 644 -t /app/lib/ libtodesk_fix.so
-      # Install resources.
-      - install -D -m 755 -t /app/bin/ apply_extra todesk.sh
+      # Extract deb
+      - bsdtar --to-stdout -xf todesk-amd64.deb data.* | bsdtar -xf -
+      - mv opt/todesk -T $FLATPAK_DEST/todesk
+      # Install resources
+      - install -D -m 755 -t /app/bin/ todesk.sh
       - install -D -t /app/share/icons/hicolor/512x512/apps/ com.todesk.ToDesk.png
       - install -D -t /app/share/applications/ com.todesk.ToDesk.desktop
       - install -D -t /app/share/metainfo/ com.todesk.ToDesk.metainfo.xml
     only-arches:
       - "x86_64"
     sources:
-      - type: script
-        commands:
-          - bsdtar -x -f todesk-amd64.deb
-          - tar -xf data.tar.xz
-          - mv opt/todesk .
-          - rm -rf opt usr etc *.tar.* debian-binary *.deb
-        dest-filename: apply_extra
-      - type: extra-data
-        filename: todesk-amd64.deb
-        url: https://dl.todesk.com/linux/todesk-v4.7.2.0-amd64.deb
+      - type: file
+        dest-filename: todesk-amd64.deb
+        url: https://😡TODESK_DOMAIN😡/😡TODESK_DIR😡/todesk-v4.7.2.0-amd64.deb
         sha256: bfb5695d715568a23df51a735167c073a784ecd1c625e16b35e5136d5b97fb28
-        size: 63204994
         x-checker-data:
           type: html
           url: https://www.todesk.com/linux.html
