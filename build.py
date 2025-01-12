@@ -26,7 +26,6 @@ def flatpak_build(appname: str, manifest: str):
             "repo",
             appname + ".flatpak",
             appname,
-            "--runtime-repo=https://flathub.org/repo/flathub.flatpakrepo",
         ],
         check=True,
         cwd=appname,

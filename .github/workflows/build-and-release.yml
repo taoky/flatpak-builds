@@ -16,7 +16,7 @@ jobs:
           ./docker.sh
       - name: Set Release Version
         id: vars
-        run: echo "VERSION=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+        run: echo "VERSION=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_OUTPUT
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
