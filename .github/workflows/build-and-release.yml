@@ -1,0 +1,25 @@
+name: Build and Release
+
+on:
+  - workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Build
+        run: |
+          ./docker.sh
+      - name: Set Release Version
+        id: vars
+        run: echo "VERSION=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./*/*.flatpak
+          tag_name: ${{ steps.vars.outputs.VERSION }}

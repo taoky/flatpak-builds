@@ -1,0 +1,5 @@
+Build Flatpak single-file bundles for some certain packages not on Flathub, with GitHub Actions & GitHub Releases.
+
+List:
+
+- com.todesk.ToDesk from <https://github.com/chenyuanrun/flathub/tree/com.todesk.ToDesk> (<https://github.com/flathub/flathub/pull/5109>).
