@@ -25,9 +25,11 @@ modules:
   - name: todesk 
     buildsystem: simple
     build-commands:
-      # Build libtodesk_fix.so
+      # Build libtodesk_fix.so and lovers_suicide
       - gcc -shared -fPIC -std=gnu11 todesk_fix.c -o libtodesk_fix.so
       - install -D -m 644 -t /app/lib/ libtodesk_fix.so
+      - gcc lovers_suicide.c -o lovers_suicide
+      - install -D -m 755 -t /app/bin/ lovers_suicide
       # Extract deb
       - bsdtar --to-stdout -xf todesk-amd64.deb data.* | bsdtar -xf -
       - mv opt/todesk -T $FLATPAK_DEST/todesk
@@ -49,6 +51,8 @@ modules:
           pattern: <a type="button" href="(https://dl.todesk.com/linux/todesk-v([\d\.]+\d)-amd64.deb)" class="button" .*>立即下载</a>
       - type: file
         path: todesk_fix.c
+      - type: file
+        path: lovers_suicide.c
       - type: file
         path: todesk.sh
       - type: file
