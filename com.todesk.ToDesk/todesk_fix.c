@@ -66,7 +66,7 @@ ssize_t readlink(const char *restrict pathname, char *restrict buf,
     ori_readlink = dlsym(RTLD_NEXT, "readlink");
 
     if (ori_readlink == NULL) {
-        fprintf(stderr, "** error: failed to load readlink %s", dlerror);
+        fprintf(stderr, "** error: failed to load readlink %s", dlerror());
         errno = EIO;
         return -1;
     }
