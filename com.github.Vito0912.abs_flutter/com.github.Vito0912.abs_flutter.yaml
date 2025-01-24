@@ -1,0 +1,44 @@
+app-id: com.github.Vito0912.abs_flutter
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+command: abs_flutter
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=dri
+  # https://github.com/bdrazhzhov/audio-service-mpris/blob/5c344881fdccde976a4d15a7208e919301e648f3/lib/audio_service_mpris.dart#L85
+  - --own-name=org.mpris.MediaPlayer2.de.vito.abs_flutter.playback.*
+separate-locales: false
+
+modules:
+  - shared-modules/libayatana-appindicator/libayatana-appindicator-gtk3.json
+  - shared-modules/libsecret/libsecret.json
+  # https://github.com/flathub/org.kde.plasmatube/blob/40f48437e93b90354d05477585d7b011b881e2df/generated/mpv.json
+  - mpv.json
+  - name: abs_flutter
+    buildsystem: simple
+    build-commands:
+      - cp -r abs_flutter /app/
+      - mkdir -p /app/bin
+      - install -Dm755 abs_flutter.sh /app/bin/abs_flutter
+    only-arches:
+      - "x86_64"
+    sources:
+      - type: archive
+        dest: abs_flutter
+        url: https://github.com/Vito0912/abs_flutter/releases/download/v1.7.6/linux-release-1.7.6.zip
+        sha256: 35a4a76fab4774606752377b42d5557b3ae570e643647978e02a7ee26961dc17
+        strip-components: 0
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Vito0912/abs_flutter/releases
+          tag-query: .[0].tag_name
+          timestamp-query: .[0].published_at
+          version-query: .[0].tag_name | sub("^[vV]"; "")
+          url-template: "https://github.com/Vito0912/abs_flutter/releases/download/$tag/linux-release-$version.zip"
+      - type: file
+        path: abs_flutter.sh
