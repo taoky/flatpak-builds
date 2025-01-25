@@ -25,6 +25,8 @@ modules:
       - cp -r abs_flutter /app/
       - mkdir -p /app/bin
       - install -Dm755 abs_flutter.sh /app/bin/abs_flutter
+      - install -D -t /app/share/icons/hicolor/256x256/apps/ com.github.Vito0912.abs_flutter.png
+      - install -D -t /app/share/applications/ com.github.Vito0912.abs_flutter.desktop
     only-arches:
       - "x86_64"
     sources:
@@ -42,3 +44,7 @@ modules:
           url-template: "https://github.com/Vito0912/abs_flutter/releases/download/$tag/linux-release-$version.zip"
       - type: file
         path: abs_flutter.sh
+      - type: file
+        path: com.github.Vito0912.abs_flutter.png
+      - type: file
+        path: com.github.Vito0912.abs_flutter.desktop
