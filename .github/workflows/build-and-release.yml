@@ -11,12 +11,28 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+      - name: Restore volume caching
+        id: restore_cache
+        uses: BYK/docker-volume-cache-action/restore@main
+        with:
+          key: docker-volumes-v1-state
+          restore-keys: |
+            docker-volumes-v1-
+          volumes: |
+            flatpak-builds
       - name: Build
         env:
           TODESK_DOMAIN: ${{ secrets.TODESK_DOMAIN }}
           TODESK_DIR: ${{ secrets.TODESK_DIR }}
         run: |
           ./docker.sh
+      - name: Save volume caching
+        if: steps.restore_cache.outputs.cache-hit != 'true'
+        uses: BYK/docker-volume-cache-action/save@main
+        with:
+          key: ${{ steps.restore_cache.outputs.cache-primary-key }}
+          volumes: |
+            flatpak-builds
       - name: Set Release Version
         id: vars
         run: echo "VERSION=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_OUTPUT
