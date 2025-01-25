@@ -5,6 +5,7 @@ import os
 
 BUILD_LIST = [
     ("com.todesk.ToDesk", "com.todesk.ToDesk.yaml"),
+    ("com.github.Vito0912.abs_flutter", "com.github.Vito0912.abs_flutter.yaml"),
 ]
 
 
