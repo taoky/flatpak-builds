@@ -2,5 +2,6 @@
 /build
 /repo
 /test-build
+/builddir
 *.o
 *.so

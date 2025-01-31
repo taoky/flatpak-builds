@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.vito0912.abs_flutter</id>
+  
+  <name>Buchable</name>
+  <summary>The unofficial cross-platform app for Audiobookshelf</summary>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>BSD-3-Clause</project_license>
+  <developer_name>Vito</developer_name>
+  
+  <description>
+    <p>
+      This is a third-party app for the Audiobookshelf server, designed to maintain a single codebase for multiple OS platforms. The app is written in Dart and utilizes the Flutter framework. While the current version may not include all the features of the first-party app, it is a work in progress with ongoing development.
+    </p>
+  </description>
+  <url type="homepage">https://github.com/Vito0912/abs_flutter</url>
+  <!-- Ref: https://gitlab.gnome.org/World/podcasts/-/blob/7e961f0fe582e917b79604db95019dbb0100eafe/podcasts-gtk/resources/org.gnome.Podcasts.appdata.xml.in.in#L7 -->
+  <content_rating type="oars-1.1" />
+  <launchable type="desktop-id">io.github.vito0912.abs_flutter.desktop</launchable>
+  <releases>
+    <release version="1.7.8" date="2025-01-26" />
+  </releases>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://example.com/???.png</image>
+      <caption>Playing podcasts</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://example.com/???.png</image>
+      <caption>Login</caption>
+    </screenshot>
+  </screenshots>
+</component>

@@ -2,7 +2,7 @@
 Name=Buchable
 Comment=The unofficial cross-platform app for Audiobookshelf
 Exec=abs_flutter
-Icon=com.github.Vito0912.abs_flutter
+Icon=io.github.vito0912.abs_flutter
 Terminal=false
 Type=Application
 Categories=Audio;
