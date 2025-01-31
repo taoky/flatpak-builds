@@ -3,3 +3,12 @@ Build Flatpak single-file bundles for some certain packages not on Flathub, with
 List:
 
 - com.todesk.ToDesk from <https://github.com/chenyuanrun/flathub/tree/com.todesk.ToDesk> (<https://github.com/flathub/flathub/pull/5109>).
+- io.github.vito0912.abs_flutter
+
+Notes:
+
+- Update latest version:
+
+   ```shell
+   flatpak run org.flathub.flatpak-external-data-checker --edit-only xxx.yaml
+   ```
