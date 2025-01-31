@@ -42,7 +42,7 @@ modules:
           tag-query: .[0].tag_name
           timestamp-query: .[0].published_at
           version-query: .[0].tag_name | sub("^[vV]"; "")
-          url-template: "https://github.com/Vito0912/abs_flutter/releases/download/$tag/linux-release-$version.zip"
+          url-query: .[0].assets[] | select(.name | contains("linux-release")) | .browser_download_url
       - type: file
         path: abs_flutter.sh
       - type: file
