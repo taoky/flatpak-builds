@@ -1,0 +1,49 @@
+app-id: dev.filimonov.klogg
+runtime: org.kde.Platform
+runtime-version: '5.15-24.08'  # Qt5
+sdk: org.kde.Sdk
+command: klogg
+finish-args:
+  - --share=ipc
+  # Qt5 does not have a good wayland support
+  # - --socket=wayland
+  - --socket=x11
+  # - --socket=fallback-x11
+  - --device=dri
+  - --env=QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/plugins/platforms/  # Why org.kde.Platform does not set this????
+  # klogg sets DontUseNativeDialog to true, so we have to expose whole filesystem
+  - --filesystem=host
+separate-locales: false
+
+modules:
+  - name: klogg
+    buildsystem: simple
+    build-commands:
+      - chmod +x klogg.appimage
+      - ./klogg.appimage --appimage-extract
+      - install -d -m755 /app/bin
+      - mv ./squashfs-root/usr/bin/* /app/bin/
+      - rm /app/bin/klogg_crashpad_handler
+      - install -D -m644 ./squashfs-root/klogg.desktop /app/share/applications/dev.filimonov.klogg.desktop
+      - desktop-file-edit --set-key="Icon" --set-value="dev.filimonov.klogg" /app/share/applications/dev.filimonov.klogg.desktop
+      - install -D -m644 ./squashfs-root/usr/share/icons/hicolor/scalable/apps/klogg.svg /app/share/icons/hicolor/scalable/apps/dev.filimonov.klogg.svg
+      - install -D -m644 ./squashfs-root/usr/share/icons/hicolor/16x16/apps/klogg.png /app/share/icons/hicolor/16x16/apps/dev.filimonov.klogg.png
+      - install -D -m644 ./squashfs-root/usr/share/icons/hicolor/32x32/apps/klogg.png /app/share/icons/hicolor/32x32/apps/dev.filimonov.klogg.png
+      - install -D -m644 ./squashfs-root/usr/share/icons/hicolor/48x48/apps/klogg.png /app/share/icons/hicolor/48x48/apps/dev.filimonov.klogg.png
+      - install -D -t /app/share/metainfo/ dev.filimonov.klogg.metainfo.xml
+    only-arches:
+      - x86_64
+    sources:
+      - type: file
+        dest-filename: klogg.appimage
+        url: https://github.com/variar/klogg/releases/download/v22.06/klogg-22.06.0.1289-Linux-amd64.AppImage
+        sha256: 5dac09e95385d17b4cae5ee279f9b5deabaff375f5ef593d78a8970a5ae49592
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/variar/klogg/releases
+          tag-query: (.[] | select(.prerelease == false))[0].tag_name
+          timestamp-query: (.[] | select(.prerelease == false))[0].published_at
+          version-query: (.[] | select(.prerelease == false))[0].tag_name | sub("^[vV]"; "")
+          url-query: (.[] | select(.prerelease == false))[0].assets[] | select(.name | contains("Linux-amd64.AppImage")) | .browser_download_url
+      - type: file
+        path: dev.filimonov.klogg.metainfo.xml
