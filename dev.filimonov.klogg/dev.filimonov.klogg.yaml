@@ -10,9 +10,6 @@ finish-args:
   - --socket=x11
   # - --socket=fallback-x11
   - --device=dri
-  - --env=QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/plugins/platforms/  # Why org.kde.Platform does not set this????
-  # klogg sets DontUseNativeDialog to true, so we have to expose whole filesystem
-  - --filesystem=host
 separate-locales: false
 
 modules:
@@ -23,7 +20,7 @@ modules:
       - ./klogg.appimage --appimage-extract
       - install -d -m755 /app/bin
       - mv ./squashfs-root/usr/bin/* /app/bin/
-      - rm /app/bin/klogg_crashpad_handler
+      - rm /app/bin/klogg_crashpad_handler /app/bin/qt.conf
       - install -D -m644 ./squashfs-root/klogg.desktop /app/share/applications/dev.filimonov.klogg.desktop
       - desktop-file-edit --set-key="Icon" --set-value="dev.filimonov.klogg" /app/share/applications/dev.filimonov.klogg.desktop
       - install -D -m644 ./squashfs-root/usr/share/icons/hicolor/scalable/apps/klogg.svg /app/share/icons/hicolor/scalable/apps/dev.filimonov.klogg.svg
