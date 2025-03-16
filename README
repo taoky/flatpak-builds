@@ -10,8 +10,34 @@ List:
 
 Notes:
 
-- Update latest version:
+- Update to latest version URL & sha256sum:
 
    ```shell
    flatpak run org.flathub.flatpak-external-data-checker --edit-only xxx.yaml
+   ```
+
+- Shell function for `dev.filimonov.klogg`:
+
+   bash:
+
+   ```bash
+   klogg() {
+      if [[ -z "$1" ]]; then
+         echo "Usage: klogg <filename>"
+         return 1
+      fi
+      flatpak run --file-forwarding dev.filimonov.klogg @@ "$1" @@
+   }
+   ```
+
+   fish:
+
+   ```fish
+   function klogg
+      if test -z "$argv"
+         echo "Usage: klogg <filename>"
+         return 1
+      end
+      flatpak run --file-forwarding dev.filimonov.klogg @@ $argv[1] @@
+   end
    ```
