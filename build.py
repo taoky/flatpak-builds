@@ -33,7 +33,7 @@ def flatpak_build(appname: str, manifest: str):
             "flatpak-builder",
             "--force-clean",
             "--install-deps-from=flathub",
-            "--install",
+            "--repo=repo",
             "build",
             manifest,
         ],
@@ -44,7 +44,7 @@ def flatpak_build(appname: str, manifest: str):
         [
             "flatpak",
             "build-bundle",
-            "/var/lib/flatpak/repo/",
+            "repo",
             appname + ".flatpak",
             appname,
         ],
