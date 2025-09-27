@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -z "$(ls -A /tmp/.X11-unix 2>/dev/null)" ] && [ -n "$WAYLAND_DISPLAY" ]; then
+  # Do wayland
+  exec zypak-wrapper /app/bin/Folo --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3 "$@"
+else
+  # X11 server exists
+  exec zypak-wrapper /app/bin/Folo "$@"
+fi
