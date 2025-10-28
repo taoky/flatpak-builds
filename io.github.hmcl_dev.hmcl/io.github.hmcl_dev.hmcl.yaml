@@ -47,9 +47,7 @@ modules:
         url: https://github.com/HMCL-dev/HMCL/releases/download/v3.6.20/HMCL-3.6.20.jar
         sha256: 691866221c8501e5a79ad61d87afa05019bde0389f867aa8425314d588aae759
       - type: file
-        dest-filename: io.github.hmcl_dev.hmcl.png
-        url: https://raw.githubusercontent.com/hmcl_dev/HMCL/37d6857b82cbb70d9b2ebcb9f7b90328ffd1668b/HMCL/image/hmcl.png
-        sha256: d4e56ae2e8c0d991dba01ef3124ef4d38918825f58728338a8bab5e78319306a
+        path: io.github.hmcl_dev.hmcl.png
       - type: file
         path: io.github.hmcl_dev.hmcl.desktop
       - type: file
