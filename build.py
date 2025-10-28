@@ -11,6 +11,9 @@ BUILD_LIST = [
     ("io.github.hmcl_dev.hmcl", "io.github.hmcl_dev.hmcl.yaml"),
     ("org.gnome.dfeet", "org.gnome.dfeet.yaml"),
     ("org.gnome.dspy", "org.gnome.dspy.yaml"),
+
+    # https://github.com/taoky/Cider/releases
+    # https://github.com/taoky/showimg/releases
 ]
 
 
