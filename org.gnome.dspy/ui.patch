@@ -1,0 +1,47 @@
+diff --git a/org.gnome.dspy.devel.json b/org.gnome.dspy.devel.json
+index 4c69550..fab8518 100644
+--- a/org.gnome.dspy.devel.json
++++ b/org.gnome.dspy.devel.json
+@@ -1,7 +1,7 @@
+ {
+     "app-id": "org.gnome.dspy.devel",
+     "runtime": "org.gnome.Platform",
+-    "runtime-version": "master",
++    "runtime-version": "49",
+     "sdk": "org.gnome.Sdk",
+     "command": "d-spy",
+     "finish-args": [
+diff --git a/src/dspy-name-row.ui b/src/dspy-name-row.ui
+index 5933fce..8fc8734 100644
+--- a/src/dspy-name-row.ui
++++ b/src/dspy-name-row.ui
+@@ -12,7 +12,7 @@
+         <property name="spacing">3</property>
+         <child>
+           <object class="GtkLabel" id="title">
+-            <property name="ellipsize">end</property>
++            <property name="ellipsize">none</property>
+             <property name="xalign">0</property>
+           </object>
+         </child>
+diff --git a/src/dspy-view.ui b/src/dspy-view.ui
+index af04963..1ff353a 100644
+--- a/src/dspy-view.ui
++++ b/src/dspy-view.ui
+@@ -19,6 +19,8 @@
+         <property name="height-request">500</property>
+         <child>
+           <object class="AdwNavigationSplitView" id="paned">
++            <property name="sidebar-width-fraction">0.5</property>
++            <property name="max-sidebar-width">1000</property>
+             <child type="sidebar">
+               <object class="AdwNavigationPage">
+                 <property name="title" translatable="yes">D-Spy</property>
+@@ -107,6 +109,7 @@
+                         <property name="vexpand">1</property>
+                         <property name="child">
+                           <object class="GtkViewport">
++                            <property name="scroll-to-focus">0</property>
+                             <property name="child">
+                               <object class="GtkListBox" id="names_list_box">
+                                 <style>

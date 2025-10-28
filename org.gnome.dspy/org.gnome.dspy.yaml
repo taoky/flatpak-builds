@@ -1,0 +1,31 @@
+id: org.gnome.dspy
+runtime: org.gnome.Platform
+runtime-version: "49"
+sdk: org.gnome.Sdk
+command: d-spy
+finish-args:
+  - --device=dri
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=session-bus
+  - --socket=system-bus
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /man
+  - /share/doc
+  - /share/gtk-doc
+  - /share/man
+  - /share/pkgconfig
+  - "*.la"
+  - "*.a"
+modules:
+  - name: dspy
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/d-spy/48/d-spy-48.0.tar.xz
+        sha256: 0f7a09019046194d97fc3c342b384ea1c380e10a9cfc8025bfcde57d595c3830
+      - type: patch
+        path: ui.patch
