@@ -1,0 +1,43 @@
+id: org.gnome.dfeet
+runtime: org.gnome.Platform
+runtime-version: "49"
+sdk: org.gnome.Sdk
+command: d-feet
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=system-bus
+  - --socket=session-bus
+modules:
+  - name: pycairo
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app
+    sources:
+      - type: archive
+        url: https://github.com/pygobject/pycairo/releases/download/v1.21.0/pycairo-1.21.0.tar.gz
+        sha256: 251907f18a552df938aa3386657ff4b5a4937dde70e11aa042bc297957f4b74b
+        x-checker-data:
+            type: anitya
+            project-id: 13166
+            url-template: https://github.com/pygobject/pycairo/releases/download/v$version/pycairo-$version.tar.gz
+    cleanup:
+      - /include
+      - /share/pkgconfig
+  - name: d-feet
+    buildsystem: meson
+    config-opts:
+      - -Dtests=false
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/d-feet/0.3/d-feet-0.3.16.tar.xz
+        sha256: 8733ce4b9a9a54ec185b1d85bf4da9d9d11052882a880760ff60f9779b2d1ccb
+        x-checker-data:
+          type: gnome
+          name: d-feet
+          # D-Feet does not follow the odd/even stable branch convention
+          stable-only: false
+      - type: patch
+        path: d-feet_meson_drop_unused_argument.patch

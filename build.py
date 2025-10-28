@@ -8,10 +8,12 @@ BUILD_LIST = [
     ("io.github.vito0912.abs_flutter", "io.github.vito0912.abs_flutter.yaml"),
     ("dev.filimonov.klogg", "dev.filimonov.klogg.yaml"),
     ("io.github.RSSNext.Folo", "io.github.RSSNext.Folo.yaml"),
+    ("io.github.hmcl_dev.hmcl", "io.github.hmcl_dev.hmcl.yaml"),
+    ("org.gnome.dfeet", "org.gnome.dfeet.yaml"),
 ]
 
 
-def get_replacement(env, default):
+def get_replacement(env: str, default: str):
     res = os.environ.get(env, default)
     if not res:
         return default
