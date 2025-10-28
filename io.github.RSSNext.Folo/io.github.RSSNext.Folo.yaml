@@ -32,8 +32,8 @@ modules:
     sources:
       - type: file
         dest-filename: folo.AppImage
-        url: https://github.com/RSSNext/Folo/releases/download/v0.7.0/Folo-0.7.0-linux-x64.AppImage
-        sha256: 04e5f7f53df310247ba715568779bfa9047b6465320ad639dd0375d26cbf986d
+        url: https://github.com/RSSNext/Folo/releases/download/v0.9.0/Folo-0.9.0-linux-x64.AppImage
+        sha256: 71c0764c371e1ca8ec56439fb15af19fefed45e92c4c6e29285706fdb4068fc1
         x-checker-data:
           type: json
           url: https://api.github.com/repos/RSSNext/Folo/releases
