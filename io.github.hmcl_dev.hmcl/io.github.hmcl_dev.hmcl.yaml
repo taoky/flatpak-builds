@@ -44,7 +44,7 @@ modules:
     sources:
       - type: file
         dest-filename: HMCL.jar 
-        url: https://github.com/HMCL-dev/HMCL/releases/download/release-3.6.20/HMCL-3.6.20.jar
+        url: https://github.com/HMCL-dev/HMCL/releases/download/v3.6.20/HMCL-3.6.20.jar
         sha256: 691866221c8501e5a79ad61d87afa05019bde0389f867aa8425314d588aae759
       - type: file
         dest-filename: io.github.hmcl_dev.hmcl.png
