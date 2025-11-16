@@ -1,14 +1,5 @@
 Build Flatpak single-file bundles for some certain packages not on Flathub, with GitHub Actions & GitHub Releases.
 
-List:
-
-- com.todesk.ToDesk from <https://github.com/chenyuanrun/flathub/tree/com.todesk.ToDesk> (Modified from <https://github.com/flathub/flathub/pull/5109>)
-- io.github.vito0912.abs_flutter (from upstream pre-built release)
-- dev.filimonov.klogg (from upstream appimage)
-- io.github.hmcl_dev.hmcl (from upstream jar, modified from <https://github.com/flathub/flathub/pull/2607/>)
-- org.gnome.dfeet (from upstream tarball, modified from its archived flathub repo)
-- org.gnome.dspy (from upstream tarball, pinned to version 48, with a small UI patch, manifest modified from org.gnome.dspy)
-
 "COPYING" files within dirs are the license of each manifest files (xxx.yaml*), not for original software.
 
 Notes:
