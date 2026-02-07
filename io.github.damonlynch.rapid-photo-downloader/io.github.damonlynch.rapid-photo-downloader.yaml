@@ -1,0 +1,205 @@
+app-id: io.github.damonlynch.rapid-photo-downloader
+runtime: org.kde.Platform
+runtime-version: '5.15-24.08'  # Qt5
+sdk: org.kde.Sdk
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: '5.15-24.08'
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+build-options:
+  env:
+    - BASEAPP_REMOVE_WEBENGINE=1
+command: rapid-photo-downloader
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=all
+  - --filesystem=xdg-pictures
+  - --filesystem=xdg-videos
+  - --filesystem=/run/media
+  - --filesystem=/media
+  - --filesystem=/run/usbmuxd:ro
+  - --filesystem=xdg-run/gvfs
+  - --filesystem=xdg-run/gvfsd
+  - --system-talk-name=org.freedesktop.UDisks2
+  - --env=LANG=en_US.UTF-8
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/man
+  - /share/doc
+  - '*.la'
+  - '*.a'
+
+modules:
+  - name: libgphoto2
+    # https://github.com/flathub/org.darktable.Darktable/blob/0a4e5a2703c380e01597f18659ba969d6451f042/org.darktable.Darktable.json#L251
+    sources:
+      - type: archive
+        url: https://github.com/gphoto/libgphoto2/releases/download/v2.5.33/libgphoto2-2.5.33.tar.bz2
+        sha256: c55504e725cf44b6ca67e1cd7504ad36dc98d7a0469a9e8d627fd0fb3848aa1d
+        x-checker-data:
+          type: anitya
+          project-id: 12558
+          stable-only: true
+          url-template: https://github.com/gphoto/libgphoto2/releases/download/v$version/libgphoto2-$version.tar.bz2
+  - name: zeromq # dependency of pyzmq
+    # https://github.com/flathub/org.octave.Octave/blob/6c4fb01fab4bb3764d0aed571d832ed803a797b4/octave-modules.yaml#L355
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DWITH_DOC=OFF
+      - -Wno-dev # disable warnings for project developers
+    sources:
+      - type: git
+        url: https://github.com/zeromq/libzmq
+        commit: 622fc6dde99ee172ebaa9c8628d85a7a1995a21d
+        tag: v4.3.5
+        x-checker-data:
+          type: git
+          tag-pattern: ^v([\d.]+)$
+  - python3-scikit-build-core.json  # pyzmq
+  - python3-pdm-backend.json  # pymediainfo
+  - python3-pybind11.json  # pillow
+  - python3-importlib_metadata.json
+  - python3-requirements.json
+  - shared-modules/intltool/intltool-0.51.json
+  - name: exiv2
+    # https://github.com/flathub/org.gramps_project.Gramps/blob/61273f8d582c868ccec867d14cb29ba1ac01b1ba/DepsImages.yml#L7
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DEXIV2_ENABLE_BMFF=ON
+      - -DEXIV2_ENABLE_INIH=OFF
+    sources:
+      - type: archive
+        url: https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.5.tar.gz
+        sha256: e1671f744e379a87ba0c984617406fdf8c0ad0c594e5122f525b2fb7c28d394d
+    cleanup:
+      - "*.a"
+      - /bin
+      - /include
+      - /lib/cmake
+      - /lib/pkgconfig
+      - /share
+  - name: gexiv2
+    # https://github.com/flathub/org.gramps_project.Gramps/blob/61273f8d582c868ccec867d14cb29ba1ac01b1ba/DepsImages.yml#L19
+    buildsystem: meson
+    config-opts:
+      - -Dvapi=false
+    sources:
+      - type: archive
+        url: https://gitlab.gnome.org/GNOME/gexiv2/-/archive/gexiv2-0.14.3/gexiv2-gexiv2-0.14.3.tar.gz
+        sha256: 5a7ea82effa9c812ac1518a1b4a22a15035d721b0b30cd4b8303228fd5b38e3c
+    cleanup:
+      - /include
+      - /lib/pkgconfig
+  - name: polkit
+    buildsystem: meson
+    config-opts:
+      - -Dauthfw=shadow
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/polkit/polkit/-/archive/124/polkit-124.tar.gz
+        sha256: 72457d96a0538fd03a3ca96a6bf9b7faf82184d4d67c793eb759168e4fd49e20
+  - name: udisks2  # gir
+    buildsystem: autotools
+    config-opts:
+      - --disable-daemon
+    sources:
+      - type: archive
+        url: https://github.com/storaged-project/udisks/releases/download/udisks-2.10.1/udisks-2.10.1.tar.bz2
+        sha256: b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece
+  - name: perl  # exiftool
+    no-autogen: true
+    config-opts:
+      - -des
+      - -Duseshrplib
+    build-options:
+      cflags: -fPIC
+      ldflags: -fpic
+    cleanup:
+      - /bin/corelist
+      - /bin/cpan
+      - /bin/enc*
+      - /bin/h2*
+      - /bin/instmodsh
+      - /bin/json_pp
+      - /bin/libnetcfg
+      - /bin/perlbug
+      - /bin/perldoc
+      - /bin/perlivp
+      - /bin/perlthanks
+      - /bin/piconv
+      - /bin/pl2pm
+      - /bin/pod*
+      - /bin/prove
+      - /bin/ptar*
+      - /bin/shasum
+      - /bin/splain
+      - /bin/streamzip
+      - /bin/xsubpp
+      - /bin/zipdetails
+      - /man
+      - "*.h"
+    post-install:
+      - "find ${FLATPAK_DEST}/lib/perl5/ -name \\*.so -exec chmod u+w {} \\;"
+    sources:
+      - type: archive
+        url: https://www.cpan.org/src/5.0/perl-5.42.0.tar.gz
+        sha256: e093ef184d7f9a1b9797e2465296f55510adb6dab8842b0c3ed53329663096dc
+      - type: script
+        dest-filename: configure
+        commands:
+          - exec ./configure.gnu $@
+  - name: exiftool
+    buildsystem: simple
+    build-commands:
+      - perl-libs/install.sh
+    post-install:
+      - chmod -Rf u+w ${FLATPAK_DEST}/lib/perl5/site_perl
+    sources:
+      - exiftool-sources.json
+    cleanup:
+      - /man
+  - name: libzen
+    subdir: Project/GNU/Library
+    config-opts:
+      - --enable-shared
+      - --disable-static
+    cleanup:
+      - /bin
+      - /include
+      - /lib/pkgconfig
+      - /lib/*.la
+    sources:
+      - type: archive
+        url: https://mediaarea.net/download/source/libzen/0.4.41/libzen_0.4.41.tar.xz
+        sha256: 933bad3b7ecd29dc6bdc88a83645c83dfd098c15b0b90d6177a37fa1536704e8
+  - name: libmediainfo
+    subdir: Project/GNU/Library
+    config-opts:
+      - --enable-shared
+      - --disable-static
+      - --with-libcurl
+    cleanup:
+      - /bin
+      - /include
+      - /lib/pkgconfig
+      - /lib/*.la
+    sources:
+      - type: archive
+        url: https://mediaarea.net/download/source/libmediainfo/25.10/libmediainfo_25.10.tar.xz
+        sha256: ad13d9797b046ce39d0c65a6f81d2aef2429734c21865a6a4c592c7c01f249dd
+  - name: rapid-photo-downloader
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py build
+      - python3 setup.py install --prefix=/app --optimize=1
+    sources:
+      - type: archive
+        url: https://launchpad.net/rapid/pyqt/0.9.36/+download/rapid-photo-downloader-0.9.36.tar.gz
+        sha256: a3dc363ee2bb931a4ba76d65ec136adda7d1fe99af2e59c90057ce0c842765e4
