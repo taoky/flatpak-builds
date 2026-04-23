@@ -1,6 +1,6 @@
 app-id: dev.filimonov.klogg
 runtime: org.kde.Platform
-runtime-version: '5.15-24.08'  # Qt5
+runtime-version: '5.15-25.08'  # Qt5
 sdk: org.kde.Sdk
 command: klogg
 finish-args:
