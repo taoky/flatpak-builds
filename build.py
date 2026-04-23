@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 
 BUILD_LIST = [
-    ("com.todesk.ToDesk", "com.todesk.ToDesk.yaml"),
+    # ("com.todesk.ToDesk", "com.todesk.ToDesk.yaml"),
     ("io.github.vito0912.abs_flutter", "io.github.vito0912.abs_flutter.yaml"),
     ("dev.filimonov.klogg", "dev.filimonov.klogg.yaml"),
     ("io.github.RSSNext.Folo", "io.github.RSSNext.Folo.yaml"),
